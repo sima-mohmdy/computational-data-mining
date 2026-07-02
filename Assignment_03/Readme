@@ -1,0 +1,113 @@
+
+📌 Assignment 03 - QR Decomposition for Image Classification
+🧠 Problem Description
+
+In this assignment, we implemented an image classification system using the QR decomposition method.
+The dataset is a simplified version of MNIST (TinyMNIST) containing handwritten digits from 0 to 9.
+
+Each image is a grayscale 28×28 matrix.
+
+⚙️ Method Overview
+
+The classification process is based on the following steps:
+
+1. Data Preparation
+Images are loaded from folders (one folder per digit class)
+Each image is flattened into a 784-dimensional vector
+2. Matrix Construction
+
+For each class k∈{0,...,9}:
+
+A matrix A
+k
+	​
+
+ is created where each column is a training image
+3. QR Decomposition
+
+For each class matrix:
+
+A
+k
+	​
+
+=Q
+k
+	​
+
+R
+k
+	​
+
+Q
+k
+	​
+
+: orthonormal basis for class k
+R
+k
+	​
+
+: upper triangular matrix
+4. Classification (Test Phase)
+
+For each test image x:
+
+Project x onto each class subspace:
+x
+^
+k
+	​
+
+=Q
+k
+	​
+
+Q
+k
+T
+	​
+
+x
+Compute reconstruction error:
+∥x−
+x
+^
+k
+	​
+
+∥
+Predicted class:
+arg
+k
+min
+	​
+
+∥x−
+x
+^
+k
+	​
+
+∥
+📊 Results
+Test Accuracy: ~82%
+🧪 Tools Used
+Python
+NumPy
+Pandas
+scikit-learn
+matplotlib
+📁 Project Structure
+Assignment_03/
+│
+├── exercise3_qr_classification.ipynb
+└── README.md
+💡 Key Idea
+
+The model classifies images by measuring how well each image can be reconstructed using the subspace of each digit class.
+The class with the smallest reconstruction error is selected.
+
+🚀 Author
+
+This project was implemented as part of a Computational Data Mining course.
