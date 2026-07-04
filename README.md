@@ -22,7 +22,7 @@ My goal is not only to complete the assignments, but to truly understand the alg
 * ✅ Assignment 01
 * ✅ Assignment 02
 * ✅ Assignment 03
-* ⏳ Assignment 04
+* ✅ Assignment 04
 * ⏳ Assignment 05
 * ⏳ Assignment 06
 * ⏳ Assignment 07
@@ -182,6 +182,86 @@ This assignment changed the way I think about linear algebra.
 Instead of seeing QR decomposition as only a mathematical technique, I learned how it can be used to build a practical image classifier.
 
 I also realized that understanding the mathematical intuition behind an algorithm makes implementing it much easier than simply translating formulas into code.
+
+---
+
+# Assignment 04
+
+## Goal
+
+Explore **Singular Value Decomposition (SVD)** as a method for image compression and dimensionality reduction.
+
+The goal is to understand how images can be approximated using low-rank matrix factorization while preserving essential visual information.
+
+---
+
+## What I Learned
+
+* Images can be represented as matrices (grayscale) or three matrices (RGB channels).
+* SVD decomposes a matrix into:
+  * U (left singular vectors)
+  * Σ (singular values)
+  * Vᵀ (right singular vectors)
+* Singular values represent the importance of each component.
+* Most image information is concentrated in the largest singular values.
+* Low-rank approximation can significantly reduce storage requirements.
+
+---
+
+## Mathematical Idea
+
+Each image matrix A is decomposed as:
+
+A = U Σ Vᵀ
+
+A compressed approximation is obtained by keeping only the top k singular values:
+
+A_k = U_k Σ_k V_kᵀ
+
+---
+
+## RGB Image Processing
+
+For color images:
+* The image is split into R, G, B channels
+* SVD is applied separately to each channel
+* The reconstructed channels are combined back into one image
+
+---
+
+## Compression Ratio
+
+Compression is achieved by storing only:
+
+3 × k × (1 + m + n)
+
+instead of full image matrices.
+
+---
+
+## Observations
+
+* Small k → high compression, lower quality
+* Large k → better quality, lower compression
+* SVD captures the most significant structure of the image
+
+---
+
+## Challenges
+
+* Understanding how matrix decomposition relates to image structure
+* Choosing the appropriate value of k
+* Handling RGB reconstruction correctly
+* Debugging dimension mismatches in NumPy
+* Understanding normalization and value scaling for image display
+
+---
+
+## Reflection
+
+This assignment showed how linear algebra concepts like SVD are directly used in real-world applications such as image compression and machine learning.
+
+It also helped connect mathematical decomposition to practical data reduction techniques.
 
 ---
 
