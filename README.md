@@ -23,7 +23,7 @@ My goal is not only to complete the assignments, but to truly understand the alg
 * ✅ Assignment 02
 * ✅ Assignment 03
 * ✅ Assignment 04
-* ⏳ Assignment 05
+* ✅ Assignment 05
 * ⏳ Assignment 06
 * ⏳ Assignment 07
 * ⏳ Assignment 08
@@ -278,3 +278,111 @@ My approach is:
 5. Improve the code quality by learning more Pythonic programming techniques while preserving the original understanding.
 
 I believe that writing my own implementations first helps me develop stronger problem-solving skills before focusing on code optimization.
+
+
+# Assignment 05
+
+## Goal
+
+Explore a new application of **Singular Value Decomposition (SVD)** for **image denoising** instead of image compression.
+
+The main goal of this assignment is to understand how SVD can separate meaningful image structure from noise and how choosing an appropriate rank k affects the quality of reconstruction.
+
+---
+
+## What I Learned
+
+* SVD is not only useful for compression, but also for **noise reduction**.
+* Noisy images can be modeled as a combination of:
+  * True image information (signal)
+  * Random noise
+* Large singular values mostly represent the important structure of the image.
+* Small singular values often contain noise and fine unwanted details.
+* Removing small singular values helps in denoising.
+* The choice of k directly affects the balance between:
+  * Preserving details
+  * Removing noise
+
+---
+
+## Method Overview
+
+### Adding Noise
+
+* Gaussian noise was added to the original image.
+* Image values were converted to floating point to avoid numerical overflow.
+* Values were clipped to ensure valid pixel range.
+
+---
+
+### SVD Decomposition
+
+SVD was applied to both:
+
+* Grayscale image
+* Each RGB channel separately
+
+A = U Σ Vᵀ
+
+---
+
+### Reconstruction
+
+The image was reconstructed using different values of k:
+
+A_k = U_k Σ_k V_kᵀ
+
+This helped visualize how image quality changes with rank.
+
+---
+
+### Singular Value Analysis
+
+* Singular values were plotted on a logarithmic scale.
+* The decay pattern was used to estimate a suitable value of k.
+* The “elbow point” in the plot helped identify a good trade-off region.
+
+---
+
+## Observations
+
+* Small k:
+  * Strong noise removal
+  * Loss of important details
+
+* Large k:
+  * Better detail preservation
+  * Some noise still visible
+
+* Medium k:
+  * Best balance between denoising and detail preservation
+
+For this experiment, the best visual result was observed around:
+
+k ≈ 50
+
+---
+
+## Challenges
+
+* Understanding the difference between compression and denoising.
+* Choosing the correct value of k based on both:
+  * Singular value plot
+  * Visual inspection of images
+* Handling noise properly in floating-point format.
+* Maintaining consistency between grayscale and RGB implementations.
+* Interpreting why larger k does not always mean better quality.
+
+---
+
+## Reflection
+
+This assignment helped me understand SVD from a deeper perspective.
+
+Previously, I saw SVD mainly as a compression tool, but now I understand that it can also act as a **filtering method** that separates signal from noise.
+
+The most important insight was that:
+
+> Not all information in an image is useful, and SVD allows us to distinguish between meaningful structure and noise based on singular values.
+
+This assignment made it clear that choosing the right rank k is not just a technical step, but a balance between mathematical structure and visual perception.
