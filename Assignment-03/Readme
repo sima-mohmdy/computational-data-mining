@@ -1,165 +1,235 @@
+QR-Based Handwritten Digit Classification
 Overview
 
 This project implements handwritten digit classification using QR decomposition and linear algebra techniques.
 
 The main idea is to represent each digit class using its training images, reconstruct test images using each class representation, and classify each test image based on the minimum reconstruction error.
 
+The main goal of this exercise is to practice the connection between:
+
+Linear Algebra → Mathematical Formulation → Algorithm → NumPy Implementation
+
+Dataset
+
+The dataset consists of grayscale handwritten digit images with a resolution of 28 × 28 pixels.
+
+Each image is flattened into a 784-dimensional vector, since 28 × 28 = 784.
+
+Data
+10 digit classes: 0–9
+400 training images per class
+600 test images
+784 features per image
 Method 1 — Projection onto the Q Subspace
 
-For each digit class, the training images are arranged as columns:
+For each digit class, the training images are arranged as columns.
 
-A∈R
-784×400
+The training matrix has dimensions:
 
-QR decomposition:
+A: 784 × 400
 
-A=QR
+QR Decomposition
+
+For each class, QR decomposition is applied:
+
+A = QR
 
 where:
 
-Q∈R
-784×400
-R∈R
-400×400
+Q: 784 × 400
+
+R: 400 × 400
+
+The columns of Q form an orthonormal basis for the subspace represented by the training images of that class.
+
+Projection
 
 For a test image x, its projection onto the class subspace is:
 
-x
-^
-=QQ
-T
-x
+x̂ = QQᵀx
+
+Reconstruction Error
 
 The reconstruction error is:
 
-e=∥x−
-x
-^
-∥
-2
-	​
+e = ||x − x̂||₂
 
+This error is calculated for all ten digit classes.
 
-The predicted class is:
+The predicted class is the class with the smallest reconstruction error:
 
-y
-^
-	​
+ŷ = arg min₍c₎ ||x − x̂_c||₂
 
-=
-c
-argmin
-	​
-
-∥x−
-x
-^
-c
-	​
-
-∥
-2
-	​
-
+Method 1 Pipeline
+Training Images
+      ↓
+Construct A for each class
+      ↓
+QR Decomposition
+      ↓
+Obtain Q
+      ↓
+Project Test Image
+      ↓
+Reconstruct Test Image
+      ↓
+Calculate Reconstruction Error
+      ↓
+Select Minimum Error
+      ↓
+Predicted Digit
 Method 2 — QR-Based Coefficient Reconstruction
 
-Training images are arranged as rows:
+In the second method, the training images are arranged as rows.
 
-A∈R
-400×784
+The training matrix has dimensions:
 
-QR decomposition:
+A: 400 × 784
 
-A=QR
+QR Decomposition
+
+For each class:
+
+A = QR
 
 where:
 
-Q∈R
-400×400
-R∈R
-400×784
+Q: 400 × 400
 
-The coefficient matrix is calculated as:
+R: 400 × 784
 
-X=R
-+
-Q
-T
-A
+Computing the Coefficient Matrix
 
-where R
-+
- is the Moore–Penrose pseudo-inverse.
+The coefficient matrix is calculated using the pseudo-inverse of R:
 
-The test matrix is:
+X = R⁺QᵀA
 
-A
-test
-	​
+where R⁺ is the Moore–Penrose pseudo-inverse of R.
 
-∈R
-600×784
+The resulting coefficient matrix has dimensions:
 
-Reconstruction:
+X: 784 × 784
 
-A
-^
-test
-	​
+Test Data
 
-=A
-test
-	​
+The test images are arranged as rows:
 
-X
+A_test: 600 × 784
 
-For each test image and each class:
+Reconstruction
 
-e
-i,c
-	​
+For each class, the test images are reconstructed using:
 
-=
-	​
+Â_test = A_test X
 
-A
-test
-(i)
-	​
+The dimensions are:
 
-−
-A
-^
-c
-(i)
-	​
+(600 × 784)(784 × 784) = 600 × 784
 
-	​
+Therefore:
 
-2
-	​
+Â_test: 600 × 784
 
+Reconstruction Error
 
-The predicted class is:
+For test image i and class c, the reconstruction error is:
 
-y
-^
-	​
+eᵢ,꜀ = ||A_test⁽ⁱ⁾ − Â_c⁽ⁱ⁾||₂
 
-i
-	​
+The predicted class is the class with the minimum reconstruction error:
 
-=
-c
-argmin
-	​
+ŷᵢ = arg min₍c₎ eᵢ,꜀
 
-e
-i,c
-	​
+Method 2 Pipeline
+Training Images
+      ↓
+Construct A for each class
+      ↓
+QR Decomposition
+      ↓
+Compute X = R⁺QᵀA
+      ↓
+Reconstruct Test Images
+      ↓
+Calculate Reconstruction Errors
+      ↓
+Select Minimum Error
+      ↓
+Predicted Digit
+Comparison of the Two Methods
+Aspect	Method 1	Method 2
+Data orientation	Images as columns	Images as rows
+Training matrix	784 × 400	400 × 784
+Main idea	Projection onto the Q subspace	Reconstruction using coefficient matrix
+Main formula	x̂ = QQᵀx	X = R⁺QᵀA
+Reconstruction	x̂ = QQᵀx	Â_test = A_test X
+Classification	Minimum reconstruction error	Minimum reconstruction error
 
-Core Idea
+Although the two methods use different matrix orientations and mathematical formulations, they share the same core idea:
 
-Both methods follow the same principle:
+Represent each class → Reconstruct the test image → Calculate the error → Choose the minimum error
 
-Class Representation→Reconstruction→Reconstruction Error→Minimum Error→Predicted Class
+Key Concepts
+QR Decomposition
+
+A matrix A is decomposed into Q and R:
+
+A = QR
+
+where Q contains orthogonal basis vectors and R is an upper triangular matrix.
+
+Projection
+
+Projection onto the subspace spanned by the columns of Q:
+
+x̂ = QQᵀx
+
+Reconstruction Error
+
+The difference between the original and reconstructed image:
+
+e = ||x − x̂||₂
+
+A smaller error indicates a better reconstruction.
+
+Moore–Penrose Pseudo-Inverse
+
+The pseudo-inverse is denoted by R⁺ and is used as a generalized inverse when an ordinary inverse is not suitable.
+
+Implementation
+
+The implementation is written in Python using NumPy.
+
+Main operations include:
+
+Q, R = np.linalg.qr(A)
+
+R_pinv = np.linalg.pinv(R)
+
+error = np.linalg.norm(A_test - A_hat)
+
+The mathematical procedures are implemented directly rather than using a pre-built machine learning classifier.
+
+Learning Objectives
+
+This exercise focuses on developing the following skills:
+
+Applying QR decomposition to real image data.
+Understanding orthogonal subspaces and projection.
+Understanding reconstruction-based classification.
+Translating mathematical formulas into NumPy operations.
+Managing matrix dimensions and orientations.
+Using reconstruction error as a classification criterion.
+Debugging numerical linear algebra implementations.
+Connecting linear algebra concepts with machine learning problems.
+Conclusion
+
+This exercise demonstrates how linear algebra can be applied to image classification.
+
+Instead of using a conventional machine learning classifier, each digit class is represented using its training images. Test images are reconstructed using each class representation, and the class producing the smallest reconstruction error is selected.
+
+The overall workflow is:
+
+Mathematical Formulation → Algorithm → NumPy Implementation → Reconstruction → Classification
+
+The primary purpose of the exercise is to strengthen the ability to translate mathematical concepts and algorithms into practical implementations.
