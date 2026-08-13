@@ -1,113 +1,165 @@
+Overview
 
-📌 Assignment 03 - QR Decomposition for Image Classification
-🧠 Problem Description
+This project implements handwritten digit classification using QR decomposition and linear algebra techniques.
 
-In this assignment, we implemented an image classification system using the QR decomposition method.
-The dataset is a simplified version of MNIST (TinyMNIST) containing handwritten digits from 0 to 9.
+The main idea is to represent each digit class using its training images, reconstruct test images using each class representation, and classify each test image based on the minimum reconstruction error.
 
-Each image is a grayscale 28×28 matrix.
+Method 1 — Projection onto the Q Subspace
 
-⚙️ Method Overview
+For each digit class, the training images are arranged as columns:
 
-The classification process is based on the following steps:
+A∈R
+784×400
 
-1. Data Preparation
-Images are loaded from folders (one folder per digit class)
-Each image is flattened into a 784-dimensional vector
-2. Matrix Construction
+QR decomposition:
 
-For each class k∈{0,...,9}:
+A=QR
 
-A matrix A
-k
+where:
+
+Q∈R
+784×400
+R∈R
+400×400
+
+For a test image x, its projection onto the class subspace is:
+
+x
+^
+=QQ
+T
+x
+
+The reconstruction error is:
+
+e=∥x−
+x
+^
+∥
+2
 	​
 
- is created where each column is a training image
-3. QR Decomposition
 
-For each class matrix:
+The predicted class is:
+
+y
+^
+	​
+
+=
+c
+argmin
+	​
+
+∥x−
+x
+^
+c
+	​
+
+∥
+2
+	​
+
+Method 2 — QR-Based Coefficient Reconstruction
+
+Training images are arranged as rows:
+
+A∈R
+400×784
+
+QR decomposition:
+
+A=QR
+
+where:
+
+Q∈R
+400×400
+R∈R
+400×784
+
+The coefficient matrix is calculated as:
+
+X=R
++
+Q
+T
+A
+
+where R
++
+ is the Moore–Penrose pseudo-inverse.
+
+The test matrix is:
 
 A
-k
+test
 	​
 
-=Q
-k
-	​
+∈R
+600×784
 
-R
-k
-	​
+Reconstruction:
 
-Q
-k
-	​
-
-: orthonormal basis for class k
-R
-k
-	​
-
-: upper triangular matrix
-4. Classification (Test Phase)
-
-For each test image x:
-
-Project x onto each class subspace:
-x
+A
 ^
-k
+test
 	​
 
-=Q
-k
+=A
+test
 	​
 
-Q
-k
-T
+X
+
+For each test image and each class:
+
+e
+i,c
 	​
 
-x
-Compute reconstruction error:
-∥x−
-x
+=
+	​
+
+A
+test
+(i)
+	​
+
+−
+A
 ^
-k
+c
+(i)
 	​
 
-∥
-Predicted class:
-arg
-k
-min
 	​
 
-∥x−
-x
+2
+	​
+
+
+The predicted class is:
+
+y
 ^
-k
 	​
 
-∥
-📊 Results
-Test Accuracy: ~82%
-🧪 Tools Used
-Python
-NumPy
-Pandas
-scikit-learn
-matplotlib
-📁 Project Structure
-Assignment_03/
-│
-├── exercise3_qr_classification.ipynb
-└── README.md
-💡 Key Idea
+i
+	​
 
-The model classifies images by measuring how well each image can be reconstructed using the subspace of each digit class.
-The class with the smallest reconstruction error is selected.
+=
+c
+argmin
+	​
 
-🚀 Author
+e
+i,c
+	​
 
-This project was implemented as part of a Computational Data Mining course.
+Core Idea
+
+Both methods follow the same principle:
+
+Class Representation→Reconstruction→Reconstruction Error→Minimum Error→Predicted Class
