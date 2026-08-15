@@ -1,120 +1,176 @@
+# Image Compression using SVD
 
-# Assignment 04 - Singular Value Decomposition (SVD) for Image Compression
+## Introduction
 
-## Goal
-The goal of this assignment is to explore **Singular Value Decomposition (SVD)** as a method for image compression and to understand how low-rank approximation can reduce storage while preserving important visual information.
+In this project, image compression is performed using **Singular Value Decomposition (SVD)**.
 
-This assignment demonstrates how images can be compressed by keeping only the most important singular values.
+SVD is a matrix decomposition method that factorizes a matrix into three matrices:
 
----
+A = UΣVᵀ
 
-## What I Learned
+where:
 
-- Images can be represented as matrices (grayscale) or multiple matrices (RGB channels).
-- SVD decomposes a matrix into three components:
-  - U: left singular vectors (row features)
-  - Σ (Sigma): singular values (importance of components)
-  - Vᵀ: right singular vectors (column features)
-- Singular values are ordered from most important to least important.
-- Keeping only the top `k` singular values results in a **low-rank approximation** of the image.
-- This approximation reduces storage while preserving the main structure of the image.
+- U contains the left singular vectors
+- Σ contains the singular values
+- Vᵀ contains the right singular vectors
+
+The main idea of compression is to keep only the largest singular values because they contain the most important information of the image. By removing smaller singular values, the storage size is reduced while the main structure of the image is preserved.
 
 ---
 
-## Methodology
+## Steps
 
-### 1. Image Representation
-- A grayscale image is represented as a 2D matrix.
-- A color image is split into 3 matrices:
-  - Red channel (R)
-  - Green channel (G)
-  - Blue channel (B)
+### 1. Loading Images
 
----
+Two types of images are considered:
 
-### 2. SVD Decomposition
-For each channel:
+- A grayscale image
+- A color RGB image
 
-\[
-A = U \Sigma V^T
-\]
 
-Where:
-- U contains left singular vectors
-- Σ contains singular values
-- Vᵀ contains right singular vectors
+A grayscale image is represented as a 2D matrix:
+
+(height × width)
+
+A color image is represented as three separate 2D matrices:
+
+- Red channel
+- Green channel
+- Blue channel
+
 
 ---
 
-### 3. Low-Rank Approximation
+## 2. Applying SVD
 
-To compress the image, only the first `k` singular values are kept:
+For a grayscale image, SVD decomposition is applied:
 
-\[
-A_k = U_k \Sigma_k V_k^T
-\]
+A = UΣVᵀ
 
-Different values of `k` were tested to observe the trade-off between compression and quality.
 
----
+For a color image, SVD is applied separately to each RGB channel:
 
-### 4. RGB Reconstruction
-Each channel is reconstructed separately and then combined:
+R = UᵣΣᵣVᵣᵀ
 
-- R_k
-- G_k
-- B_k
+G = U₍g₎Σ₍g₎V₍g₎ᵀ
 
-Final image:
+B = UᵦΣᵦVᵦᵀ
 
-\[
-Image_k = stack(R_k, G_k, B_k)
-\]
 
 ---
 
-## Compression Ratio
+## 3. Low Rank Approximation
 
-The compression size is calculated as:
+Instead of using all singular values, only the first k singular values are kept.
 
-\[
-3 \times k \times (1 + m + n)
-\]
+The compressed image is reconstructed as:
 
-Where:
-- `m × n` is image size
-- `k` is number of singular values used
-- Factor 3 is for RGB channels
+Aₖ = UₖΣₖVₖᵀ
 
----
 
-## Observations
+Different values of k are tested:
 
-- Small `k` → high compression but low quality
-- Large `k` → better quality but less compression
-- Singular values contain most of the important image information
-- Most image information is concentrated in a few singular values
+- k = 2
+- k = 5
+- k = 10
+- k = 25
+- k = 50
 
----
 
-## Challenges
+A smaller k results in:
 
-- Understanding how SVD relates to image structure
-- Choosing the appropriate value of `k`
-- Handling RGB images correctly
-- Debugging dimension mismatches during matrix multiplication
-- Understanding reconstruction and compression trade-off
+- More compression
+- Less storage
+- Lower image quality
 
----
 
-## Reflection
+A larger k results in:
 
-This assignment helped me understand that images are not just visual objects but mathematical structures.
+- Better reconstruction quality
+- More storage usage
 
-SVD showed that most of the important information in an image can be captured using a small number of components, which is the core idea behind many compression and machine learning techniques like PCA.
 
 ---
 
-## Files
-- `svd.ipynb` → Implementation of SVD image compression
-- `README.md` → Explanation of the assignment
+## 4. Memory Reduction
+
+The original image requires storing:
+
+m × n values
+
+
+After compression, instead of storing the whole matrix, only these matrices are stored:
+
+- Uₖ : (m × k)
+- Σₖ : (k × k)
+- Vₖᵀ : (k × n)
+
+
+Therefore, the required storage is reduced.
+
+The memory saving is calculated by comparing the original image size with the compressed representation.
+
+
+---
+
+## 5. Singular Values Analysis
+
+The singular values represent the importance of different components of the image.
+
+The first singular values usually contain the main structure and important information, while smaller singular values represent less important details and possible noise.
+
+
+A logarithmic plot of singular values is used to analyze their contribution.
+
+
+---
+
+## 6. Explained Variance
+
+The contribution of each singular value is calculated using:
+
+σᵢ² / Σσ²
+
+
+The relationship between singular values and eigenvalues is:
+
+λᵢ = σᵢ²
+
+
+Therefore, this concept is related to explained variance in PCA.
+
+The cumulative explained variance shows how much information is preserved when keeping the first k singular values.
+
+
+---
+
+## Results
+
+The results show that:
+
+- A small number of singular values can preserve most important image information.
+- SVD can significantly reduce storage requirements.
+- Low-rank approximation can reconstruct images with acceptable quality.
+
+
+---
+
+## Libraries
+
+- NumPy
+- SciPy
+- Matplotlib
+- Image Processing tools
+
+
+---
+
+## Conclusion
+
+This project demonstrates the application of Singular Value Decomposition for image compression.
+
+SVD provides a connection between linear algebra concepts and practical applications such as:
+
+- Image compression
+- Dimensionality reduction
+- Data representation
