@@ -153,8 +153,12 @@ The results suggest that the non-negative factorization approach was better able
 - Pandas
 
 
-  ## Dataset Source
+## Reference
 
-The TDT2 and Reuters21578 datasets used in this assignment were obtained from the Text Data collection provided by Deng Cai:
+This assignment is based on the following paper:
+
+**Orthogonal Nonnegative Matrix Factorization by Sparsity and nuclear norm optimization (ONMF)**
+
+The datasets used in this assignment were obtained from the Text Data collection provided by Deng Cai:
 
 [Text Data — Deng Cai](http://www.cad.zju.edu.cn/home/dengcai/Data/TextData.html)
