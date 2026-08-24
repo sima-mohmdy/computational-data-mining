@@ -157,7 +157,7 @@ The results suggest that the non-negative factorization approach was better able
 
 This assignment is based on the following paper:
 
-**Orthogonal Nonnegative Matrix Factorization by Sparsity and nuclear norm optimization (ONMF)**
+**Orthogonal Nonnegative Matrix Factorization by Sparsity and Nuclear Norm Optimization (ONMF)**
 
 The datasets used in this assignment were obtained from the Text Data collection provided by Deng Cai:
 
