@@ -16,7 +16,6 @@ The dataset contains pairs of web pages and their hyperlinks:
 Each unique URL is considered a node in the directed graph.
 
 The dataset is not included in this repository due to its size.
-
 The dataset was provided as part of the exercise materials.
 Please place the dataset in the appropriate path before running the notebook.
 
