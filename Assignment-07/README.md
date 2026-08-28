@@ -15,6 +15,9 @@ The dataset contains pairs of web pages and their hyperlinks:
 
 Each unique URL is considered a node in the directed graph.
 
+The dataset is not included in this repository due to its size.
+Please download it from the original source before running the notebook.
+
 ## Method
 
 The PageRank algorithm was implemented through the following steps:
