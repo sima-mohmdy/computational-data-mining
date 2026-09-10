@@ -7,7 +7,7 @@ The assignments focus on understanding how different types of data—such as ima
 
 ---
 
-## 🧭 Learning Path
+##  Learning Path
 
 The assignments follow a progression from basic data representation to more advanced data mining techniques:
 
@@ -33,7 +33,7 @@ Manifold Learning & Dimensionality Reduction
 
 ---
 
-## 📚 Assignments
+##  Assignments
 
 | Assignment | Topic                                       |
 | ---------- | ------------------------------------------- |
@@ -52,7 +52,7 @@ Each assignment includes its own implementation, explanations, and results.
 
 ---
 
-## 🧠 Main Concepts
+##  Main Concepts
 
 * Image representation and processing
 * Matrix operations and decomposition
@@ -72,7 +72,7 @@ Each assignment includes its own implementation, explanations, and results.
 
 ---
 
-## 🛠️ Tools & Libraries
+##  Tools & Libraries
 
 * Python
 * NumPy
@@ -87,7 +87,7 @@ Each assignment includes its own implementation, explanations, and results.
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```text
 Computational-Data-Mining/
@@ -106,7 +106,7 @@ Computational-Data-Mining/
 
 ---
 
-## 🎯 Learning Focus
+##  Learning Focus
 
 The main goal of this repository was to go beyond simply implementing algorithms and to understand the connection between:
 
@@ -126,6 +126,6 @@ Through these assignments, I practiced applying computational data mining method
 
 ---
 
-## 📌 Note
+##  Note
 
 This repository represents my practical work and learning throughout the **Computational Data Mining** course.
