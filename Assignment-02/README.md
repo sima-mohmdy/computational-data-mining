@@ -1,10 +1,10 @@
-🟢 Assignment 02 - TinyMNIST Classification (Mean Image + Euclidean Distance)
-📌 Problem Description
+ Assignment 02 - TinyMNIST Classification (Mean Image + Euclidean Distance)
+ Problem Description
 
 In this assignment, we work with the TinyMNIST dataset which contains images of handwritten digits (0–9).
 Each image is classified based on a simple nearest-mean approach.
 
-⚙️ Method
+## Method
 1. Data Preparation
 Images are loaded from folders (train/test)
 Each image is converted to a NumPy array
@@ -21,7 +21,7 @@ For each test image:
 
 Compute Euclidean distance to all class mean vectors
 Assign the label of the nearest mean (minimum distance)
-📊 Evaluation
+ Evaluation
 
 Accuracy is computed using:
 
@@ -31,20 +31,20 @@ Final Accuracy:
 
 79.5%
 
-📁 Dataset Structure
+## Dataset Structure
 TinyMNIST/
 ├── train/
 │   ├── 0 ... 9 (class folders)
 ├── test/
 ├── train labels.csv
 └── test labels.csv
-🧠 Key Concepts Learned
+ Key Concepts Learned
 Image preprocessing
 NumPy array manipulation
 Flattening images
 Mean image computation
 Euclidean distance
 Basic classification without ML libraries
-🚀 Author
+## Author
 
 Student Project - Computational Data Mining Course
